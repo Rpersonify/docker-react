@@ -1,0 +1,19 @@
+# Pulling node alpine image of specific version
+FROM node:16-alpine
+
+RUN mkdir -p /home/node/app
+
+# Defining working directory
+WORKDIR '/home/node/app'
+
+# Copying package.json to working directory as this file not oftenly modified
+COPY --chown=node:node ./package.json ./
+
+# Installing dependencies
+RUN npm install
+
+# Copying all project into the working directory
+COPY --chown=node:node ./ ./
+
+# Defining default command on container startup
+CMD [ "npm" , "run", "start"]
